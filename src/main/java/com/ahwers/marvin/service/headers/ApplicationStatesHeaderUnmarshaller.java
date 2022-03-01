@@ -1,4 +1,4 @@
-package com.ahwers.marvin.service;
+package com.ahwers.marvin.service.headers;
 
 import java.util.Base64;
 import java.util.HashMap;

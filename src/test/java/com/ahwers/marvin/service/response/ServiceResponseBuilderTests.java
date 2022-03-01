@@ -1,4 +1,4 @@
-package com.ahwers.marvin.service;
+package com.ahwers.marvin.service.response;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

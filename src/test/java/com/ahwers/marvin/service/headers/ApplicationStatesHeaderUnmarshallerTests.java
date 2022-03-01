@@ -1,4 +1,4 @@
-package com.ahwers.marvin.service;
+package com.ahwers.marvin.service.headers;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -7,12 +7,12 @@ import java.util.Base64;
 import java.util.Map;
 import java.util.Set;
 
+import com.ahwers.marvin.applications.test.TestApplicationOne;
+import com.ahwers.marvin.applications.test.TestApplicationStateOne;
+import com.ahwers.marvin.applications.test.TestApplicationStateTwo;
+import com.ahwers.marvin.applications.test.TestApplicationTwo;
 import com.ahwers.marvin.framework.application.state.ApplicationState;
 import com.ahwers.marvin.framework.application.state.ApplicationStateFactory;
-import com.ahwers.marvin.service.applications.test.TestApplicationOne;
-import com.ahwers.marvin.service.applications.test.TestApplicationStateOne;
-import com.ahwers.marvin.service.applications.test.TestApplicationStateTwo;
-import com.ahwers.marvin.service.applications.test.TestApplicationTwo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

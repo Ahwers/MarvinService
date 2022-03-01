@@ -8,6 +8,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.ahwers.marvin.framework.application.action.ActionInvocation;
+import com.ahwers.marvin.service.request.Command;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 public class TestClient {

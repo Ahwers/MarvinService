@@ -1,4 +1,4 @@
-package com.ahwers.marvin.service.applications.test;
+package com.ahwers.marvin.applications.test;
 
 import com.ahwers.marvin.framework.application.state.ApplicationState;
 

@@ -14,6 +14,10 @@ import com.ahwers.marvin.framework.application.action.ActionInvocation;
 import com.ahwers.marvin.framework.application.state.ApplicationState;
 import com.ahwers.marvin.framework.application.state.ApplicationStateFactory;
 import com.ahwers.marvin.framework.response.MarvinResponse;
+import com.ahwers.marvin.service.framework.MarvinProvider;
+import com.ahwers.marvin.service.headers.ApplicationStatesHeaderUnmarshaller;
+import com.ahwers.marvin.service.request.Command;
+import com.ahwers.marvin.service.response.ServiceResponseBuilder;
 
 @Path("/command")
 public class MarvinService {

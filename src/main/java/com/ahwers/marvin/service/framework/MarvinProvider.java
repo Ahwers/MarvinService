@@ -1,4 +1,4 @@
-package com.ahwers.marvin.service;
+package com.ahwers.marvin.service.framework;
 
 import com.ahwers.marvin.framework.Marvin;
 
@@ -11,10 +11,10 @@ public class MarvinProvider {
         Marvin marvin = null;
 
         if ((executionProfile == null) || executionProfile.equals(DEVELOPMENT_EXECUTION_PROFILE)) {
-            marvin = new Marvin("com.ahwers.marvin.service.applications");
+            marvin = new Marvin("com.ahwers.marvin.applications");
         }
         else if (executionProfile.equals(PRODUCTION_EXECUTION_PROFILE)) {
-            marvin = new Marvin("com.ahwers.marvin.service.applications.main");
+            marvin = new Marvin("com.ahwers.marvin.applications.main");
         }
         else {
             throw new IllegalArgumentException("An execution profile has not been set up for the value '" + executionProfile + "'.");
