@@ -2,7 +2,9 @@ package com.ahwers.marvin.service;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import javax.ws.rs.core.Response;
 
@@ -23,7 +25,7 @@ public class ServiceEndpointsIT {
     private TestClient client = null;
 
     @BeforeAll
-    public void setUp() {
+    public void setUp() throws InterruptedException, ExecutionException, IOException {
         client = new TestClient();
     }
 
