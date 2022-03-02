@@ -21,13 +21,8 @@ import com.ahwers.marvin.service.headers.ApplicationStatesHeaderUnmarshaller;
 import com.ahwers.marvin.service.request.Command;
 import com.ahwers.marvin.service.response.ServiceResponseBuilder;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 @Path("/command")
 public class MarvinService {
-
-    private static Logger logger = LogManager.getLogger(MarvinService.class);
 
     private final String EXECUTION_PROFILE_ENVIRONMENT_VARIABLE_KEY = "execution_profile";
 	private final String APPLICATION_STATES_HEADER_KEY = "application_states";
@@ -38,7 +33,6 @@ public class MarvinService {
 	private MsalAuthHelper auth = new MsalAuthHelper();
 	
 	public MarvinService() {
-
         String executionProfile = System.getenv(EXECUTION_PROFILE_ENVIRONMENT_VARIABLE_KEY);
 		this.marvin = MarvinProvider.getMarvinInstanceForExecutionProfile(executionProfile);
 
@@ -46,19 +40,19 @@ public class MarvinService {
 		this.appStatesHeaderUnmarshaller = new ApplicationStatesHeaderUnmarshaller(appStateFactory);
 	}
 
+	// TODO: The exceptions thrown by these methods need to be sorted
+
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response command(Command command, @HeaderParam("Authorization") String bearerToken, @HeaderParam(APPLICATION_STATES_HEADER_KEY) String marshalledAppStates) throws MalformedURLException {
-		String commandText = command.getCommand();
-
-		logger.error("Bearer Token: " + bearerToken);
-		String oboToken = auth.getOboToken(bearerToken, "");
-		logger.error("Obo Token: " + oboToken);
+		bearerToken = bearerToken.replaceFirst("Bearer ", "");
+		String oboToken = auth.getOboToken(bearerToken);
 
 		Map<String, ApplicationState> appStates = appStatesHeaderUnmarshaller.unmarshallAppStatesHeaders(marshalledAppStates);
 		marvin.updateApplicationStates(appStates);
 
+		String commandText = command.getCommand();
 		MarvinResponse marvinResponse = marvin.processCommand(commandText);
 		Response serviceResponse = ServiceResponseBuilder.constructServiceResponseFromMarvinResponse(marvinResponse);
 
@@ -69,7 +63,10 @@ public class MarvinService {
 	@Path("/execute")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response executeActionInvocation(ActionInvocation action, @HeaderParam("application_states") String marshalledAppStates) {
+	public Response executeActionInvocation(ActionInvocation action, @HeaderParam("Authorization") String bearerToken, @HeaderParam("application_states") String marshalledAppStates) throws MalformedURLException {
+		bearerToken = bearerToken.replaceFirst("Bearer ", "");
+		String oboToken = auth.getOboToken(bearerToken);
+		
 		Map<String, ApplicationState> appStates = appStatesHeaderUnmarshaller.unmarshallAppStatesHeaders(marshalledAppStates);
 		marvin.updateApplicationStates(appStates);
 

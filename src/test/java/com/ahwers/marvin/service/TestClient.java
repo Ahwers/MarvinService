@@ -37,22 +37,21 @@ public class TestClient {
        aadAccessToken = getAadAccessToken();
     }
 
-    // TODO: Sort out the property file keys. Do it like the main resources one, call it application.properties
     private String getAadAccessToken() throws InterruptedException, ExecutionException, IOException {
         Properties client_config = new Properties();
-        client_config.load(AuthTests.class.getClassLoader().getResourceAsStream("integration_test_aad_client_configuration.properties"));
+        client_config.load(this.getClass().getClassLoader().getResourceAsStream("application.properties"));
 
-        String PUBLIC_CLIENT_ID = client_config.getProperty("client_id");
-        String AUTHORITY = client_config.getProperty("authority");
+        String PUBLIC_CLIENT_ID = client_config.getProperty("add.client.client_id");
+        String AUTHORITY = client_config.getProperty("add.client.authority");
 
         PublicClientApplication app = PublicClientApplication
             .builder(PUBLIC_CLIENT_ID)
             .authority(AUTHORITY)
             .build();
     
-        String username = client_config.getProperty("username");
-        String password = client_config.getProperty("password");
-        Set<String> scopes = Set.of(client_config.getProperty("scopes").split(", "));
+        String username = client_config.getProperty("add.client.test_user.username");
+        String password = client_config.getProperty("add.client.test_user.password");
+        Set<String> scopes = Set.of(client_config.getProperty("add.client.scopes").split(", "));
 
         UserNamePasswordParameters parameters = UserNamePasswordParameters.builder(scopes, username, password.toCharArray()).build();
         CompletableFuture<IAuthenticationResult> result = app.acquireToken(parameters);
@@ -67,7 +66,7 @@ public class TestClient {
 
         Response response = target.request()
             .accept(MediaType.APPLICATION_JSON)
-            .header("Authentication", "Bearer " + this.aadAccessToken)
+            .header("Authorization", "Bearer " + this.aadAccessToken)
             .post(Entity.json(command));
         
         response.close();
@@ -80,7 +79,7 @@ public class TestClient {
 
         Response response = target.request()
             .accept(MediaType.APPLICATION_JSON)
-            .header("Authentication", "Bearer " + this.aadAccessToken)
+            .header("Authorization", "Bearer " + this.aadAccessToken)
             .post(Entity.json(actionInvocation));
 
         response.close();
