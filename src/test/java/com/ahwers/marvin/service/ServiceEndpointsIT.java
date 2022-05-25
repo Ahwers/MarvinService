@@ -8,6 +8,7 @@ import java.util.concurrent.ExecutionException;
 
 import javax.ws.rs.core.Response;
 
+import com.ahwers.marvin.TestClient;
 import com.ahwers.marvin.framework.application.action.ActionInvocation;
 import com.ahwers.marvin.service.request.Command;
 
@@ -40,12 +41,14 @@ public class ServiceEndpointsIT {
     public void sendCommand() {
         Response response = client.postCommandRequest(new Command("endpoint test"));
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
+        response.close();
     }
 
     @Test
     public void sendInvocation() {
         Response response = client.postActionInvocationExecutionRequest(new ActionInvocation("Endpoint Test Application", "endpointTest", Map.of()));
         assertTrue(response.getStatus() == Response.Status.OK.getStatusCode());
+        response.close();
     }
 
 }

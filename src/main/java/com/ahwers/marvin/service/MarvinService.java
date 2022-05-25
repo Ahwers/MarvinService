@@ -9,18 +9,19 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.Provider;
 
 import com.ahwers.marvin.framework.Marvin;
 import com.ahwers.marvin.framework.application.action.ActionInvocation;
 import com.ahwers.marvin.framework.application.state.ApplicationState;
 import com.ahwers.marvin.framework.application.state.ApplicationStateFactory;
 import com.ahwers.marvin.framework.response.MarvinResponse;
-import com.ahwers.marvin.service.authentication.MsalAuthHelper;
 import com.ahwers.marvin.service.framework.MarvinProvider;
 import com.ahwers.marvin.service.headers.ApplicationStatesHeaderUnmarshaller;
 import com.ahwers.marvin.service.request.Command;
 import com.ahwers.marvin.service.response.ServiceResponseBuilder;
 
+@Provider
 @Path("/command")
 public class MarvinService {
 
@@ -30,10 +31,9 @@ public class MarvinService {
 	private Marvin marvin;
 	private ApplicationStatesHeaderUnmarshaller appStatesHeaderUnmarshaller;
 
-	private MsalAuthHelper auth = new MsalAuthHelper();
-	
 	public MarvinService() {
         String executionProfile = System.getenv(EXECUTION_PROFILE_ENVIRONMENT_VARIABLE_KEY);
+		// TODO: Log execution profile
 		this.marvin = MarvinProvider.getMarvinInstanceForExecutionProfile(executionProfile);
 
         ApplicationStateFactory appStateFactory = marvin.getApplicationStateFactory();
@@ -45,10 +45,8 @@ public class MarvinService {
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response command(Command command, @HeaderParam("Authorization") String bearerToken, @HeaderParam(APPLICATION_STATES_HEADER_KEY) String marshalledAppStates) throws MalformedURLException {
-		bearerToken = bearerToken.replaceFirst("Bearer ", "");
-		String oboToken = auth.getOboToken(bearerToken);
-
+	public Response command(Command command, @HeaderParam(APPLICATION_STATES_HEADER_KEY) String marshalledAppStates) throws MalformedURLException {
+		// TODO: Make this a filter
 		Map<String, ApplicationState> appStates = appStatesHeaderUnmarshaller.unmarshallAppStatesHeaders(marshalledAppStates);
 		marvin.updateApplicationStates(appStates);
 
@@ -63,10 +61,7 @@ public class MarvinService {
 	@Path("/execute")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response executeActionInvocation(ActionInvocation action, @HeaderParam("Authorization") String bearerToken, @HeaderParam("application_states") String marshalledAppStates) throws MalformedURLException {
-		bearerToken = bearerToken.replaceFirst("Bearer ", "");
-		String oboToken = auth.getOboToken(bearerToken);
-		
+	public Response executeActionInvocation(ActionInvocation action, @HeaderParam("application_states") String marshalledAppStates) throws MalformedURLException {
 		Map<String, ApplicationState> appStates = appStatesHeaderUnmarshaller.unmarshallAppStatesHeaders(marshalledAppStates);
 		marvin.updateApplicationStates(appStates);
 

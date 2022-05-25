@@ -1,4 +1,4 @@
-package com.ahwers.marvin.service;
+package com.ahwers.marvin;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -69,8 +69,6 @@ public class TestClient {
             .header("Authorization", "Bearer " + this.aadAccessToken)
             .post(Entity.json(command));
         
-        response.close();
-
         return response;
     }
 
@@ -81,8 +79,6 @@ public class TestClient {
             .accept(MediaType.APPLICATION_JSON)
             .header("Authorization", "Bearer " + this.aadAccessToken)
             .post(Entity.json(actionInvocation));
-
-        response.close();
 
         return response;
     }

@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Set;
 
-import com.ahwers.marvin.applications.main.TaskCreatorApplication;
+import com.ahwers.marvin.applications.main.microsoftuser.MicrosoftUserDetailsApplication;
 import com.ahwers.marvin.applications.test.EndpointTestApplication;
 import com.ahwers.marvin.applications.test.TestApplicationOne;
 import com.ahwers.marvin.applications.test.TestApplicationTwo;
@@ -25,7 +25,8 @@ public class MarvinProviderTests {
             EndpointTestApplication.class,
             TestApplicationOne.class,
             TestApplicationTwo.class,
-            TaskCreatorApplication.class
+            // TaskCreatorApplication.class,
+            MicrosoftUserDetailsApplication.class
         );
         assertAll(
             () -> assertTrue(supportedApplications.size() == expectedApplicationClasses.size()),
@@ -43,7 +44,8 @@ public class MarvinProviderTests {
         Set<Application> supportedApplications = marvin.getApplicationStateFactory().getSupportedApplications();
 
         Set<Class<? extends Application>> expectedApplicationClasses = Set.of(
-            TaskCreatorApplication.class
+            // TaskCreatorApplication.class,
+            MicrosoftUserDetailsApplication.class
         );
         assertAll(
             () -> assertTrue(supportedApplications.size() == expectedApplicationClasses.size()),
