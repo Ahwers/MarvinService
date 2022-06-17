@@ -22,6 +22,12 @@ import com.microsoft.aad.msal4j.UserNamePasswordParameters;
 
 public class TestClient {
 
+    public static void main(String[] args) throws InterruptedException, ExecutionException, IOException {
+        TestClient testClient = new TestClient();
+        String testBearer = testClient.getBearer();
+        System.out.println(testBearer);
+    }
+
 	public final static String SERVER_ADDRESS = "http://127.0.0.1:8080/";
 	public final static String MARVIN_ENDPOINT = (SERVER_ADDRESS + "MarvinService/");
 	public final static String MARVIN_COMMAND_ENDPOINT = (MARVIN_ENDPOINT + "service/command");
@@ -59,6 +65,10 @@ public class TestClient {
         String accessToken = result.get().accessToken();
 
         return accessToken;
+    }
+
+    public String getBearer() {
+        return this.aadAccessToken;
     }
 
     public Response postCommandRequest(Command command) {

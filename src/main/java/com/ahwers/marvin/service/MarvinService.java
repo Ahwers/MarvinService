@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.HeaderParam;
+import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -25,6 +26,7 @@ import com.ahwers.marvin.service.response.ServiceResponseBuilder;
 @Path("/command")
 public class MarvinService {
 
+	// TODO: Put excecution profile stuff in MarvinProvider and make MarvinProvider a singleton
     private final String EXECUTION_PROFILE_ENVIRONMENT_VARIABLE_KEY = "execution_profile";
 	private final String APPLICATION_STATES_HEADER_KEY = "application_states";
 
@@ -55,6 +57,11 @@ public class MarvinService {
 		Response serviceResponse = ServiceResponseBuilder.constructServiceResponseFromMarvinResponse(marvinResponse);
 
 		return serviceResponse;
+	}
+
+	@OPTIONS
+	public Response options() {
+		return Response.ok("").build();
 	}
 	
 	@POST
