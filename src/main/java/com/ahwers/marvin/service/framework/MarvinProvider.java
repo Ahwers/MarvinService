@@ -10,6 +10,7 @@ public class MarvinProvider {
     public static Marvin getMarvinInstanceForExecutionProfile(String executionProfile) {
         Marvin marvin = null;
 
+        // TODO: Fail if the environment varible doesn't exist
         if ((executionProfile == null) || executionProfile.equals(DEVELOPMENT_EXECUTION_PROFILE)) {
             marvin = new Marvin("com.ahwers.marvin.applications");
         }

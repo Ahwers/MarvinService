@@ -151,6 +151,7 @@
                             <goal>deploy</goal>
                         </goals>
                         <configuration>
+                            <port>4040</port>
                             <scanIntervalSeconds>0</scanIntervalSeconds>
                             <daemon>true</daemon>
                             <timeout>300</timeout>
